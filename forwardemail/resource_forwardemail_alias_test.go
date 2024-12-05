@@ -6,7 +6,6 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/the-infra-company/forwardemail-api-go"
 	"github.com/the-infra-company/forwardemail-api-go/forwardemail"
 )
 
