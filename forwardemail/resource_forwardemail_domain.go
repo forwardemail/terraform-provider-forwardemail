@@ -3,10 +3,10 @@ package forwardemail
 import (
 	"context"
 
-	"github.com/abagayev/go-forwardemail/forwardemail"
 	"github.com/google/go-cmp/cmp"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/the-infra-company/forwardemail-api-go/forwardemail"
 )
 
 func resourceDomain() *schema.Resource {
