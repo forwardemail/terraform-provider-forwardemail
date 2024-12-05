@@ -9,3 +9,27 @@
 # Terraform Forward Email Provider
 
 The [Forward Email Provider](https://registry.terraform.io/providers/) enables [Terraform](https://terraform.io) to manage [Forward Email](https://forwardemail.net/) resources.
+
+## Usage
+
+```terraform
+terraform {
+  required_version = ">= 1.0.0"
+
+  required_providers {
+    spacelift = {
+      source  = "the-infra-company/forwardemail"
+      version = ">= 1.0"
+    }
+  }
+}
+
+provider "forwardemail" {
+  api_key = "XXXXXXX"
+}
+
+resource "forwardemail_domain" "default" {
+  name = "infracompany.com"
+}
+```
+
