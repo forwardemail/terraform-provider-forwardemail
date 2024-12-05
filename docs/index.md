@@ -8,9 +8,22 @@ description: |-
 
 # forwardemail Provider
 
+
+
 ## Example Usage
 
 ```terraform
+terraform {
+  required_version = ">= 1.0.0"
+
+  required_providers {
+    spacelift = {
+      source  = "the-infra-company/forwardemail"
+      version = ">= 1.0"
+    }
+  }
+}
+
 provider "forwardemail" {
   api_key = "XXXXXXX"
 }
@@ -21,4 +34,4 @@ provider "forwardemail" {
 
 ### Required
 
-- `api_key` (String, Sensitive) The API key for API operations.
+- `api_key` (String, Sensitive) The API key for Forward Email management

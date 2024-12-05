@@ -22,9 +22,10 @@ A resource to create Forward Email domain aliases.
 
 ### Optional
 
-- `has_recipient_verification` (Boolean) Whether to enable to require recipients to click an email verification link for emails to flow through.
-- `is_enabled` (Boolean) Whether to enable to disable this alias.
+- `description` (String) Alias description.
+- `enabled` (Boolean) Whether to enable to disable this alias.
 - `labels` (List of String) List of labels.
+- `recipient_verification` (Boolean) Whether to enable to require recipients to click an email verification link for emails to flow through.
 - `recipients` (List of String) List of recipients as valid email addresses, fully-qualified domain names (FQDN), IP addresses, or webhook URL's.
 
 ### Read-Only

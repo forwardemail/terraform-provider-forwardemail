@@ -21,11 +21,11 @@ A resource to create Forward Email domains.
 
 ### Optional
 
-- `has_adult_content_protection` (Boolean) Whether to enable Spam Scanner adult content protection on this domain.
-- `has_executable_protection` (Boolean) Whether to enable Spam Scanner executable protection on this domain.
-- `has_phishing_protection` (Boolean) Whether to enable Spam Scanner phishing protection on this domain.
-- `has_recipient_verification` (Boolean) Global domain default for whether to require alias recipients to click an email verification link for emails to flow through.
-- `has_virus_protection` (Boolean) Whether to enable Spam Scanner virus protection on this domain.
+- `adult_content_protection` (Boolean) Whether to enable Spam Scanner adult content protection on this domain.
+- `executable_protection` (Boolean) Whether to enable Spam Scanner executable protection on this domain.
+- `phishing_protection` (Boolean) Whether to enable Spam Scanner phishing protection on this domain.
+- `recipient_verification` (Boolean) Global domain default for whether to require alias recipients to click an email verification link for emails to flow through.
+- `virus_protection` (Boolean) Whether to enable Spam Scanner virus protection on this domain.
 
 ### Read-Only
 
