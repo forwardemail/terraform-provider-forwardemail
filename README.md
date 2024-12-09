@@ -8,7 +8,7 @@
 
 # Terraform Forward Email Provider
 
-The [Forward Email Provider](https://registry.terraform.io/providers/) enables [Terraform](https://terraform.io) to manage [Forward Email](https://forwardemail.net/) resources.
+The [Forward Email Provider]([https://registry.terraform.io/providers/](https://registry.terraform.io/providers/The-Infra-Company/forwardemail/latest)) enables [Terraform](https://terraform.io) to manage [Forward Email](https://forwardemail.net/) resources.
 
 ## Usage
 
