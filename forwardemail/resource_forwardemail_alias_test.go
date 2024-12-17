@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/forwardemail/forwardemail-api-go/forwardemail"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
-	"github.com/the-infra-company/forwardemail-api-go/forwardemail"
 )
 
 func TestAccForwardemailAlias_basic(t *testing.T) {

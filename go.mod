@@ -3,11 +3,11 @@ module github.com/the-infra-company/terraform-provider-forwardemail
 go 1.23.3
 
 require (
+	github.com/forwardemail/forwardemail-api-go v0.0.0-20241217201206-b20e80bb9561
 	github.com/google/go-cmp v0.6.0
 	github.com/hashicorp/terraform-plugin-docs v0.20.1
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.35.0
 	github.com/jaswdr/faker v1.19.1
-	github.com/the-infra-company/forwardemail-api-go v0.0.0-20241205175437-60d0a3754426
 )
 
 require (
