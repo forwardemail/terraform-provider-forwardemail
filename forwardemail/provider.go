@@ -3,9 +3,9 @@ package forwardemail
 import (
 	"context"
 
+	"github.com/forwardemail/forwardemail-api-go/forwardemail"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/the-infra-company/forwardemail-api-go/forwardemail"
 )
 
 func Provider() *schema.Provider {
