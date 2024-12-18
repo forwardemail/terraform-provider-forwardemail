@@ -1,37 +1,59 @@
-# Local .terraform directories
+# Compiled files
 **/.terraform/*
-
-# .tfstate files
 *.tfstate
 *.tfstate.*
+**/planfile
+**/*.planfile
+**/*.kubeconfig
+**/terraform.tfvars.json
+**/*.terraform.tfvars.json
+**/*.helmfile.vars.yaml
+**/.terraform.lock.hcl
 
-# Crash log files
-crash.log
-crash.*.log
+# Module directory
+.terraform
+**/.idea
+**/*.iml
 
-# Exclude all .tfvars files, which are likely to contain sensitive data, such as
-# password, private keys, and other secrets. These should not be part of version 
-# control as they are data points which are potentially sensitive and subject 
-# to change depending on the environment.
-*.tfvars
-*.tfvars.json
+**/.build-harness
+**/build-harness
+**/build
+**/dist
+**/.helmfile/
+.DS_Store
+/variant
+*.tar
+*.gz
+**/bin
 
-# Ignore override files as they are usually used to override resources locally and so
-# are not checked in
-override.tf
-override.tf.json
-*_override.tf
-*_override.tf.json
+*.dll
+*.exe
+example.tf
+terraform.tfplan
+terraform.tfstate
+bin/
+dist/
+modules-dev/
+/pkg/
+website/.vagrant
+website/.bundle
+website/build
+website/node_modules
+.vagrant/
+*.backup
+./*.tfstate
+.terraform.lock.hcl
+.terraform/
+*.log
+*.bak
+*~
+.*.swp
+.idea
+*.iml
+*.test
 
-# Ignore transient lock info files created by terraform apply
-.terraform.tfstate.lock.info
 
-# Include override files you do wish to add to version control using negated pattern
-# !example_override.tf
+# Keep windows files with windows line endings
+*.winfile eol=crlf
 
-# Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
-# example: *tfplan*
-
-# Ignore CLI configuration files
-.terraformrc
-terraform.rc
+terraform-provider-forwardemail

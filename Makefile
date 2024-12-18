@@ -1,6 +1,7 @@
 TEST?=$$(go list ./... | grep -v 'vendor')
+HOSTNAME=registry.terraform.io
 HOSTNAME=localhost
-NAMESPACE=infracompany
+NAMESPACE=forwardemail
 NAME=forwardemail
 BINARY=terraform-provider-${NAME}
 VERSION=1.0.0
@@ -11,9 +12,11 @@ default: help
 help: ## List Makefile targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+get: ## Download dependencies
+	go get
 
-build: ## Build Provider
-	go build -o build/${BINARY}
+build: get ## Build Provider
+	env GOOS=${GOOS} GOARCH=${GOARCH}	go build -o build/${BINARY}
 
 release: # Release binary
 	GOOS=darwin GOARCH=amd64 go build -o ./bin/${BINARY}_${VERSION}_darwin_amd64
@@ -40,8 +43,11 @@ fmt: ## Format Go files
 	gofumpt -w .
 
 testacc: ## Run acceptance tests
-	go test ./...
+	TF_ACC=1 go test $(TEST) -v $(TESTARGS) -timeout 3m
 
-generate: ## Generate documentation
+docs: ## Generate documentation
 	cd tools; go generate ./...
 
+tfplugindocs:
+	go install github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs
+	tfplugindocs generate
