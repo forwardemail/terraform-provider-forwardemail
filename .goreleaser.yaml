@@ -40,7 +40,6 @@ signs:
       - "--local-user"
       - "--output"
       - "${signature}"
-      - "--detach-sign"
       - "${artifact}"
 release:
   extra_files:
