@@ -19,6 +19,12 @@ func TestAccResourceForwardemailAlias(t *testing.T) {
 					resource.TestCheckResourceAttr("forwardemail_alias.test", "name", "postmaster"),
 				),
 			},
+			{
+				ResourceName:      "forwardemail_alias.test",
+				ImportState:       true,
+				ImportStateId:     "postmaster@example.com",
+				ImportStateVerify: true,
+			},
 		},
 	})
 }
