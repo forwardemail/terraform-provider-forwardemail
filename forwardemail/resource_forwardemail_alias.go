@@ -2,6 +2,8 @@ package forwardemail
 
 import (
 	"context"
+	"fmt"
+	"strings"
 
 	"github.com/forwardemail/forwardemail-api-go/forwardemail"
 	"github.com/google/go-cmp/cmp"
@@ -61,9 +63,11 @@ func resourceAlias() *schema.Resource {
 		ReadContext:   resourceAliasRead,
 		UpdateContext: resourceAliasUpdate,
 		DeleteContext: resourceAliasDelete,
+		Importer: &schema.ResourceImporter{
+			StateContext: resourceAliasImport,
+		},
 	}
 }
-
 func resourceAliasCreate(ctx context.Context, d *schema.ResourceData, meta interface{}) diag.Diagnostics {
 	client, ok := meta.(*forwardemail.Client)
 	if !ok {
@@ -174,6 +178,70 @@ func resourceAliasDelete(ctx context.Context, d *schema.ResourceData, meta inter
 	}
 
 	return nil
+}
+
+func updateResourceDataFromAlias(d *schema.ResourceData, alias *forwardemail.Alias) error {
+	d.SetId(alias.Id)
+	if err := d.Set("name", alias.Name); err != nil {
+		return err
+	}
+	if err := d.Set("domain", alias.Domain.Name); err != nil {
+		return err
+	}
+	return nil
+}
+
+func resourceAliasImport(ctx context.Context, d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+	client, ok := meta.(*forwardemail.Client)
+	if !ok {
+		return nil, fmt.Errorf("meta is not of type *forwardemail.Client")
+	}
+
+	importID := d.Id()
+
+	// If the import ID contains "@", treat it as ALIAS@DOMAIN.
+	if strings.Contains(importID, "@") {
+		parts := strings.SplitN(importID, "@", 2)
+		aliasName := parts[0]
+		domain := parts[1]
+
+		if aliasName == "" || domain == "" {
+			return nil, fmt.Errorf("invalid import format %q, expected ALIAS@DOMAIN", importID)
+		}
+
+		alias, err := client.GetAlias(domain, aliasName)
+		if err != nil {
+			return nil, fmt.Errorf("error fetching forwardemail_alias %s@%s: %w", aliasName, domain, err)
+		}
+
+		err = updateResourceDataFromAlias(d, alias)
+		if err != nil {
+			return nil, fmt.Errorf("updateResourceDataFromAlias failed: %w", err)
+		}
+
+		return []*schema.ResourceData{d}, nil
+	}
+
+	// Otherwise, treat the import ID as DOMAIN_ID:ALIAS_ID.
+	parts := strings.SplitN(importID, ":", 2)
+	if len(parts) != 2 || parts[0] == "" || parts[1] == "" {
+		return nil, fmt.Errorf("invalid import format %q, expected ALIAS@DOMAIN or DOMAIN_ID:ALIAS_ID", importID)
+	}
+
+	domainID := parts[0]
+	aliasID := parts[1]
+
+	alias, err := client.GetAlias(domainID, aliasID)
+	if err != nil {
+		return nil, fmt.Errorf("error fetching forwardemail_alias %s:%s: %w", domainID, aliasID, err)
+	}
+
+	err = updateResourceDataFromAlias(d, alias)
+	if err != nil {
+		return nil, fmt.Errorf("updateResourceDataFromAlias failed: %w", err)
+	}
+
+	return []*schema.ResourceData{d}, nil
 }
 
 // toSliceOfStrings converts slice of interfaces into pointer to slice of strings.
