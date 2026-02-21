@@ -15,7 +15,7 @@ func resourceAlias() *schema.Resource {
 	return &schema.Resource{
 		Description: "A resource to create Forward Email domain aliases.",
 		Importer: &schema.ResourceImporter{
-			StateContext: importAliasState,
+			StateContext: resourceAliasImport,
 		},
 		Schema: map[string]*schema.Schema{
 			"domain": {
@@ -208,8 +208,8 @@ func toChanges(p, c interface{}) []interface{} {
 	return nil
 }
 
-// importAliasState imports an alias using the format "domain/alias_name"
-func importAliasState(ctx context.Context, d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
+// resourceAliasImport imports an alias using the format "domain/alias_name"
+func resourceAliasImport(ctx context.Context, d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
 	parts := strings.Split(d.Id(), "/")
 	if len(parts) != 2 {
 		return nil, fmt.Errorf("invalid import ID format. Expected: domain/alias_name")

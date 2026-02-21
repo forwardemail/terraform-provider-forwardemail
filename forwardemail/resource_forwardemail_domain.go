@@ -111,7 +111,7 @@ func resourceDomainRead(ctx context.Context, d *schema.ResourceData, meta interf
 	}
 
 	for k, v := range map[string]interface{}{
-		"name":                      name,
+		"name":                     name,
 		"adult_content_protection": domain.HasAdultContentProtection,
 		"phishing_protection":      domain.HasPhishingProtection,
 		"executable_protection":    domain.HasExecutableProtection,
