@@ -210,23 +210,39 @@ func toChanges(p, c interface{}) []interface{} {
 
 // resourceAliasImport imports an alias using the format "domain/alias_name"
 func resourceAliasImport(ctx context.Context, d *schema.ResourceData, meta interface{}) ([]*schema.ResourceData, error) {
-	parts := strings.Split(d.Id(), "/")
-	if len(parts) != 2 {
-		return nil, fmt.Errorf("invalid import ID format. Expected: domain/alias_name")
+	client, ok := meta.(*forwardemail.Client)
+	if !ok {
+		return nil, fmt.Errorf("meta is not of type *forwardemail.Client")
 	}
 
-	domain := parts[0]
-	name := parts[1]
+	parts := strings.SplitN(d.Id(), "@", 2)
+	if len(parts) != 2 {
+		return nil, fmt.Errorf("invalid import ID format, expected ALIAS|ID@DOMAIN")
+	}
+
+	domain := parts[1]
+	nameOrId := parts[0]
+
+	if domain == "" || nameOrId == "" {
+		return nil, fmt.Errorf("invalid import format %q, expected ALIAS|ID@DOMAIN", d.Id())
+	}
+
+	alias, err := client.GetAlias(domain, nameOrId)
+	if err != nil {
+		return nil, fmt.Errorf("error fetching forwardemail_alias %s@%s: %w", nameOrId, domain, err)
+	}
+
+	d.SetId(alias.Id)
 
 	if err := d.Set("domain", domain); err != nil {
 		return nil, err
 	}
-	if err := d.Set("name", name); err != nil {
+
+	if err := d.Set("name", alias.Name); err != nil {
 		return nil, err
 	}
-	d.SetId(name)
 
-	// Call read to populate the rest of the fields
+	// Call read to populate the rest of the fields.
 	diags := resourceAliasRead(ctx, d, meta)
 	if diags.HasError() {
 		return nil, fmt.Errorf("failed to read alias: %v", diags[0].Summary)
